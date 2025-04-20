@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter,Routes, Route, Navigate } from 'react-router-dom'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import LoginForm from './Components/LoginForm'
+import Home from './Components/Home'
+import Products from './Components/Products'
+import ProductItemDetails from './Components/ProductItemDetails'
+import Cart from './Components/Cart'
+import NotFound from './Components/NotFound'
+import ProtectedRoute from './Components/ProtectedRoute'
 
-export default App;
+import './App.css'
+
+const App = () => (
+  <BrowserRouter>
+      <Routes>
+      <Route path="/login" element={<LoginForm />} />
+      <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+      <Route path="/products" element={<ProtectedRoute><Products /></ProtectedRoute>} />
+      <Route path="/products/:id" element={<ProtectedRoute><ProductItemDetails /></ProtectedRoute>} />
+      <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
+      <Route path="/not-found" element={<NotFound />} />
+      <Route path="*" element={<Navigate to="/not-found" />} />
+    </Routes>
+  </BrowserRouter>
+)
+
+export default App
